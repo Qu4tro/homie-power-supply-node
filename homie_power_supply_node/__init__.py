@@ -1,4 +1,5 @@
 "PowerSupply homie-spec node"
+import os
 import time
 from pathlib import Path
 from typing import NamedTuple, Iterator, Type, List, Mapping, Optional
@@ -17,7 +18,8 @@ class PowerSupply(NamedTuple):
     @staticmethod
     def base_directory() -> Path:
         "Path to the power supply base directory"
-        return Path("/sys/class/power_supply")
+        default_path = "/sys/class/power_supply"
+        return Path(os.getenv("POWER_SUPPLY_DIRECTORY") or default_path)
 
     @property
     def path(self) -> Path:
@@ -30,9 +32,7 @@ class PowerSupply(NamedTuple):
         return self.path / "uevent"
 
     @lru_cache()
-    def read_power_supply_uevent(
-        self, ttl_hash: Optional[int] = None
-    ) -> Mapping[str, str]:
+    def read_power_supply_uevent(self, ttl_h: Optional[int] = None) -> Mapping[str, str]:
         """
         Reads the power supply uvent file for data.
 
@@ -42,11 +42,11 @@ class PowerSupply(NamedTuple):
         The prefix is dropped and the rest converted to lowercase
         in the return dictionary.
 
-        This function optionally accepts the parameter `ttl_hash`
+        This function optionally accepts the parameter `ttl_h`
         which is combination with its `lru_cache`, gives us the chance
         to avoid calling it multiple times.
         """
-        del ttl_hash
+        del ttl_h
         with open(self.uvent_path, "r") as file:
             contents = file.readlines()
 
@@ -56,7 +56,7 @@ class PowerSupply(NamedTuple):
             if key.startswith("POWER_SUPPLY_")
         }
 
-    @property
+    @lru_cache()
     def keys(self) -> List[str]:
         "List of keys the power supply supports"
         return list(self.read_power_supply_uevent().keys())
@@ -64,23 +64,24 @@ class PowerSupply(NamedTuple):
     def value(self, key: str) -> str:
         """
         Retrieve the value of a key from the power supply.
-        Uses ttl_hash to use previous results if they were
+        Uses ttl_h to use previous results if they were
         available within the last minute.
         """
 
         seconds = 60
         ttl_hash = int(time.time() / seconds)
 
-        return self.read_power_supply_uevent(ttl_hash=ttl_hash)[key.lower()]
+        return self.read_power_supply_uevent(ttl_h=ttl_hash)[key.lower()]
 
-    @lru_cache
+    @lru_cache()
     def properties(self) -> Mapping[str, Property]:
         "Returns a list of properties"
         props = {}
-        for key in self.keys:
+        for key in self.keys():
+            name = key.capitalize()
             if key == "capacity":
                 props[key] = PercentageProperty(
-                    name=key.capitalize(), get=lambda: self.value("capacity")
+                    name=name, get=lambda: self.value("capacity")
                 )
             elif key == "online":
 
@@ -88,7 +89,7 @@ class PowerSupply(NamedTuple):
                     return str(bool(int(self.value(key)))).lower()
 
                 props[key] = BooleanProperty(
-                    name=key.capitalize(), get=int_to_bool_to_str
+                    name=name, get=int_to_bool_to_str
                 )
             elif key == "status":
 
@@ -96,7 +97,7 @@ class PowerSupply(NamedTuple):
                     return self.value(key)
 
                 props[key] = Property(
-                    name=key.capitalize(),
+                    name=name,
                     datatype=Datatype.ENUM,
                     get=get,
                     formatOf="Unknown,Full,Discharging,Charging",
@@ -107,15 +108,15 @@ class PowerSupply(NamedTuple):
                     return self.value(key)
 
                 props[key] = Property(
-                    name=key.capitalize(), datatype=Datatype.INTEGER, get=get, unit="#"
+                    name=name, datatype=Datatype.INTEGER, get=get, unit="#"
                 )
-            elif key in ("voltage_min_design", "voltage_now"):
+            elif key.startswith("voltage_"):
 
                 def micro_to_unit(key: str = key) -> str:
                     return str(int(self.value(key)) / 10 ** 6)
 
                 props[key] = Property(
-                    name=key.capitalize(),
+                    name=name,
                     datatype=Datatype.FLOAT,
                     get=micro_to_unit,
                     unit="V",
@@ -126,18 +127,18 @@ class PowerSupply(NamedTuple):
                     return str(int(self.value(key)) / 10 ** 6)
 
                 props[key] = Property(
-                    name=key.capitalize(),
+                    name=name,
                     datatype=Datatype.FLOAT,
                     get=micro_to_unit,
                     unit="W",
                 )
-            elif key == ("energy_full_design", "energy_full", "energy_now"):
+            elif key.startswith("energy_"):
 
                 def micro_to_unit(key: str = key) -> str:
                     return str(int(self.value(key)) / 10 ** 6)
 
                 props[key] = Property(
-                    name=key.capitalize(),
+                    name=name,
                     datatype=Datatype.FLOAT,
                     get=micro_to_unit,
                     unit="W/h",
@@ -148,7 +149,7 @@ class PowerSupply(NamedTuple):
                     return self.value(key)
 
                 props[key] = Property(
-                    name=key.capitalize(),
+                    name=name,
                     datatype=Datatype.ENUM,
                     get=get,
                     formatOf="Normal",
@@ -159,7 +160,7 @@ class PowerSupply(NamedTuple):
                     return self.value(key)
 
                 props[key] = Property(
-                    name=key.capitalize(), datatype=Datatype.STRING, get=get
+                    name=name, datatype=Datatype.STRING, get=get
                 )
 
         return props
