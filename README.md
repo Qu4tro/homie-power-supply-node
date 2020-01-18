@@ -1,6 +1,6 @@
 # homie-power-supply-node
 
-**homie-power-supply-node** is a Python package that uses homie-spec to provide a homie node implementation that can be used to create Homie-compliant messages related to your power supply device.
+**homie-power-supply-node** is a Python package that uses homie-spec to provide a homie node implementation that can be used to create Homie-compliant messages from your power supply device.
 
 This package has no dependencies other than **Python >=3.6** and `homie-spec`. 
 Only Linux is supported at the moment, as it uses `/sys/class/power_supply/*/uevent` to read the power supply properties.
