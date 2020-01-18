@@ -202,7 +202,7 @@ description = "homie-spec is a Python library that handles the v4 Homie Conventi
 name = "homie-spec"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.3.1"
+version = "0.3.2"
 
 [[package]]
 category = "dev"
@@ -351,7 +351,7 @@ description = "Auto-generate API documentation for Python projects."
 name = "pdoc3"
 optional = false
 python-versions = ">= 3.5"
-version = "0.7.2"
+version = "0.7.4"
 
 [package.dependencies]
 mako = "*"
@@ -417,7 +417,7 @@ description = "pytest: simple powerful testing with Python"
 name = "pytest"
 optional = false
 python-versions = ">=3.5"
-version = "5.3.2"
+version = "5.3.3"
 
 [package.dependencies]
 atomicwrites = ">=1.0"
@@ -434,6 +434,7 @@ python = "<3.8"
 version = ">=0.12"
 
 [package.extras]
+checkqa-mypy = ["mypy (v0.761)"]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
@@ -816,8 +817,8 @@ greenlet = [
     {file = "greenlet-0.4.15.tar.gz", hash = "sha256:9416443e219356e3c31f1f918a91badf2e37acf297e2fa13d24d1cc2380f8fbc"},
 ]
 homie-spec = [
-    {file = "homie-spec-0.3.1.tar.gz", hash = "sha256:f3bab81272725b9da51e5312f83d81c24c2dcd6e9b01357c9167b8805c626bae"},
-    {file = "homie_spec-0.3.1-py3-none-any.whl", hash = "sha256:2ee9cc8a0019ea648164758dbe7a343fcb1191a5369a4448f6117366c9bec1e7"},
+    {file = "homie-spec-0.3.2.tar.gz", hash = "sha256:68a44055b26d2a9866e66ca5118a0b7663a8d89383b7aaf4a874d86654739949"},
+    {file = "homie_spec-0.3.2-py3-none-any.whl", hash = "sha256:48a678d4c353227f2fee26dfb7d29814bab6458173adfba95a19e894167cbc96"},
 ]
 idna = [
     {file = "idna-2.8-py2.py3-none-any.whl", hash = "sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"},
@@ -927,7 +928,7 @@ pathtools = [
     {file = "pathtools-0.1.2.tar.gz", hash = "sha256:7c35c5421a39bb82e58018febd90e3b6e5db34c5443aaaf742b3f33d4655f1c0"},
 ]
 pdoc3 = [
-    {file = "pdoc3-0.7.2.tar.gz", hash = "sha256:df43a7f1a139a5a61e778f424f167719acc33ed71bf13b6c34c7ebd139866eb7"},
+    {file = "pdoc3-0.7.4.tar.gz", hash = "sha256:1a9393d6b1e8c2976c0e1a8d0b897ba5e5ea9515058470422cf57ee54293ab05"},
 ]
 pluggy = [
     {file = "pluggy-0.13.1-py2.py3-none-any.whl", hash = "sha256:966c145cd83c96502c3c3868f50408687b38434af77734af1e9ca461a4081d2d"},
@@ -950,8 +951,8 @@ pyparsing = [
     {file = "pyparsing-2.4.6.tar.gz", hash = "sha256:4c830582a84fb022400b85429791bc551f1f4871c33f23e44f353119e92f969f"},
 ]
 pytest = [
-    {file = "pytest-5.3.2-py3-none-any.whl", hash = "sha256:e41d489ff43948babd0fad7ad5e49b8735d5d55e26628a58673c39ff61d95de4"},
-    {file = "pytest-5.3.2.tar.gz", hash = "sha256:6b571215b5a790f9b41f19f3531c53a45cf6bb8ef2988bc1ff9afb38270b25fa"},
+    {file = "pytest-5.3.3-py3-none-any.whl", hash = "sha256:9f8d44f4722b3d06b41afaeb8d177cfbe0700f8351b1fc755dd27eedaa3eb9e0"},
+    {file = "pytest-5.3.3.tar.gz", hash = "sha256:f5d3d0e07333119fe7d4af4ce122362dc4053cdd34a71d2766290cf5369c64ad"},
 ]
 pytest-black = [
     {file = "pytest-black-0.3.7.tar.gz", hash = "sha256:75bbeccfe23442a190164c0bf202d7498df25451fa4177b781cee20183e7fc0d"},

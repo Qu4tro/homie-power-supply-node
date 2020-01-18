@@ -5,7 +5,7 @@ from typing import List
 
 from tests.common import (
     power_supplies_for_test,
-    final_messages,
+    all_node_messages,
     FinalMessage,
     load_power_supply_directory_env,
     TEST_DIRECTORY_PATH
@@ -40,7 +40,7 @@ def test_snapshots() -> None:
     for power_supply_id in power_supplies_for_test():
         try:
             snapshot_messages = read_snapshot(power_supply_id)
-            current_messages = final_messages(power_supply_id)
+            current_messages = all_node_messages(power_supply_id)
             assert snapshot_messages == current_messages
         except FileNotFoundError:
             assert False, "Snapshots not up to date"
@@ -56,5 +56,5 @@ def make_snapshots() -> None:
     load_power_supply_directory_env()
 
     for power_supply_id in power_supplies_for_test():
-        current_messages = final_messages(power_supply_id)
+        current_messages = all_node_messages(power_supply_id)
         write_snapshot(power_supply_id, current_messages)

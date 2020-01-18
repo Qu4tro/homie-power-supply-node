@@ -18,14 +18,28 @@ class FinalMessage(NamedTuple):
     retained: bool
 
 
-def final_messages(index: int) -> List[FinalMessage]:
+def all_node_messages(index: int) -> List[FinalMessage]:
     """
-    Returns a list of the final_messages for the power supply
+    Returns a list of the node messages for the power supply
     instantiated from the uvent file in 0_*
     """
+    node = get_power_supply(index).node
+
+    # Let's start with the declarative messages
+    messages = list(node.messages(prefix="device/power-supply"))
+
+    if node.properties is not None:
+        # Let's add in the get messages for each prop
+        messages.extend(
+            [
+                node.getter_message(prop_name, prefix="device/power-supply")
+                for prop_name in node.properties
+            ]
+        )
+
     return [
         FinalMessage(m.topic, m.payload, m.qos, m.retained)
-        for m in get_power_supply(index).node.messages(prefix="device/power-supply")
+        for m in messages
     ]
 
 

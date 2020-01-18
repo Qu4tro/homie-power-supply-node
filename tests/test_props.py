@@ -1,10 +1,6 @@
 "Test the messages returned by the power supply node"
 
-from tests.common import power_supplies_for_test, final_messages, get_power_supply
-
-# Create a pair of functions (move to commons later)
-# that will pickle/unpickle the resulting messages from a node
-# On test check if it matches
+from tests.common import power_supplies_for_test, all_node_messages, get_power_supply
 
 
 def test_qos_and_retained() -> None:
@@ -13,7 +9,7 @@ def test_qos_and_retained() -> None:
     power supply node have QOS 1 and are retained
     """
     for power_supply_id in power_supplies_for_test():
-        messages = final_messages(power_supply_id)
+        messages = all_node_messages(power_supply_id)
         assert all(m.qos == 1 for m in messages)
         assert all(m.retained is True for m in messages)
 
@@ -23,7 +19,7 @@ def test_node_attributes() -> None:
 
     for power_supply_id in power_supplies_for_test():
         power_supply = get_power_supply(power_supply_id)
-        messages = final_messages(power_supply_id)
+        messages = all_node_messages(power_supply_id)
 
         assert messages[0].topic == "device/power-supply/$name"
         assert messages[0].payload == power_supply.name
@@ -38,7 +34,7 @@ def test_node_attributes() -> None:
 def test_prop_names() -> None:
     "Check if all the $name attribute messages are correct"
     for power_supply_id in power_supplies_for_test():
-        messages = final_messages(power_supply_id)
+        messages = all_node_messages(power_supply_id)
         for message in messages:
             if not message.topic.endswith("$name"):
                 continue
@@ -51,7 +47,7 @@ def test_prop_names() -> None:
 def test_prop_datatypes() -> None:
     "Check if all the $name attribute messages are correct"
     for power_supply_id in power_supplies_for_test():
-        messages = final_messages(power_supply_id)
+        messages = all_node_messages(power_supply_id)
         for message in messages:
             if not message.topic.endswith("$datatype"):
                 continue

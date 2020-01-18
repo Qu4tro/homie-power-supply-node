@@ -1,11 +1,11 @@
 "Test the messages returned by the power supply node"
 
-from tests.common import final_messages
+from tests.common import all_node_messages
 
 
 def test_power_supply_0() -> None:
     "Test the messages returned by the power supply node"
-    messages = final_messages(0)
+    messages = all_node_messages(0)
 
     assert all(m.qos == 1 for m in messages)
     assert all(m.retained is True for m in messages)
@@ -31,12 +31,18 @@ def test_power_supply_0() -> None:
     assert messages[6].topic == "device/power-supply/online/$datatype"
     assert messages[6].payload == "boolean"
 
-    assert len(messages) == 7
+    assert messages[7].topic == "device/power-supply/name"
+    assert messages[7].payload == "AC"
+
+    assert messages[8].topic == "device/power-supply/online"
+    assert messages[8].payload == "false"
+
+    assert len(messages) == 9
 
 
 def test_power_supply_1() -> None:
     "Test the messages returned by the power supply node"
-    messages = final_messages(1)
+    messages = all_node_messages(1)
 
     assert messages[0].topic == "device/power-supply/$name"
     assert messages[0].payload == "1_BAT"
