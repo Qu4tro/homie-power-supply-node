@@ -1,4 +1,4 @@
-"Set of functions that are useful to multiple test cases"
+"Set of classes and functions that are useful to multiple test cases"
 
 import os
 from pathlib import Path
@@ -11,7 +11,11 @@ TEST_DIRECTORY_PATH = Path(os.path.dirname(os.path.realpath(__file__)))
 
 
 class FinalMessage(NamedTuple):
-    "Immutable object for a message that is ready to send"
+    """
+    Immutable object for a message that is ready to send.
+
+    This is the object that is tested throughout the test suite.
+    """
     topic: str
     payload: str
     qos: int
@@ -22,6 +26,8 @@ def all_node_messages(index: int) -> List[FinalMessage]:
     """
     Returns a list of the node messages for the power supply
     instantiated from the uvent file in 0_*
+
+    Includes both the attribute messages and the get-messages
     """
     node = get_power_supply(index).node
 
