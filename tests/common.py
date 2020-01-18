@@ -2,7 +2,7 @@
 
 import os
 from pathlib import Path
-from typing import NamedTuple, List, Iterator
+from typing import NamedTuple, List, Iterator, Optional
 
 from homie_power_supply_node import PowerSupply
 
@@ -37,10 +37,20 @@ def all_node_messages(index: int) -> List[FinalMessage]:
             ]
         )
 
-    return [
-        FinalMessage(m.topic, m.payload, m.qos, m.retained)
-        for m in messages
-    ]
+    return [FinalMessage(m.topic, m.payload, m.qos, m.retained) for m in messages]
+
+
+def find_message_and_get_payload(messages: List[FinalMessage], topic: str) -> Optional[str]:
+    """
+    Look for a message given a topic and return its payload.
+
+    Return None if the topic is not found among the messages.
+    """
+    for message in messages:
+        if message.topic == topic:
+            return message.payload
+
+    return None
 
 
 def get_power_supply(index: int) -> PowerSupply:

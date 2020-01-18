@@ -1,6 +1,7 @@
 "Test the messages returned by the power supply node"
 
-from tests.common import all_node_messages
+from functools import partial
+from tests.common import all_node_messages, find_message_and_get_payload
 
 
 def test_power_supply_0() -> None:
@@ -40,7 +41,7 @@ def test_power_supply_0() -> None:
     assert len(messages) == 9
 
 
-def test_power_supply_1() -> None:
+def test_power_supply_1_node_attributes() -> None:
     "Test the messages returned by the power supply node"
     messages = all_node_messages(1)
 
@@ -73,5 +74,25 @@ def test_power_supply_1() -> None:
     )
     assert messages[2].payload == prop_names
 
-    assert messages[7].topic == "device/power-supply/status/$format"
-    assert messages[7].payload == "Unknown,Full,Discharging,Charging"
+
+def test_power_supply_1_prop_gets() -> None:
+    "Test the messages returned by the power supply node"
+    messages = all_node_messages(1)
+    match = partial(find_message_and_get_payload, messages)
+
+    assert match("device/power-supply/name") == "BAT0"
+    assert match("device/power-supply/status") == "Discharging"
+    assert match("device/power-supply/present") == "1"
+    assert match("device/power-supply/technology") == "Li-poly"
+    assert match("device/power-supply/cycle_count") == "646"
+    assert match("device/power-supply/voltage_min_design") == "11.1"
+    assert match("device/power-supply/voltage_now") == "10.928"
+    assert match("device/power-supply/power_now") == "7.955"
+    assert match("device/power-supply/energy_full_design") == "45.0"
+    assert match("device/power-supply/energy_full") == "34.12"
+    assert match("device/power-supply/energy_now") == "4.76"
+    assert match("device/power-supply/capacity") == "13"
+    assert match("device/power-supply/capacity_level") == "Normal"
+    assert match("device/power-supply/model_name") == "01AV463"
+    assert match("device/power-supply/manufacturer") == "LGC"
+    assert match("device/power-supply/serial_number") == "1747"
