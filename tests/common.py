@@ -7,6 +7,9 @@ from typing import NamedTuple, List, Iterator
 from homie_power_supply_node import PowerSupply
 
 
+TEST_DIRECTORY_PATH = Path(os.path.dirname(os.path.realpath(__file__)))
+
+
 class FinalMessage(NamedTuple):
     "Immutable object for a message that is ready to send"
     topic: str
@@ -60,5 +63,4 @@ def load_power_supply_directory_env() -> None:
 
     This is used to load the test files inside `tests/data`
     """
-    dir_path = Path(os.path.dirname(os.path.realpath(__file__)))
-    os.environ["POWER_SUPPLY_DIRECTORY"] = str(dir_path / "data")
+    os.environ["POWER_SUPPLY_DIRECTORY"] = str(TEST_DIRECTORY_PATH / "data")

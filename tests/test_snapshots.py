@@ -1,8 +1,6 @@
 "Test the messages returned by the power supply node"
 
-import os
 import pickle
-from pathlib import Path
 from typing import List
 
 from tests.common import (
@@ -10,9 +8,10 @@ from tests.common import (
     final_messages,
     FinalMessage,
     load_power_supply_directory_env,
+    TEST_DIRECTORY_PATH
 )
 
-SNAPSHOTS_PATH = Path(os.path.dirname(os.path.realpath(__file__))) / "snapshots"
+SNAPSHOTS_PATH = TEST_DIRECTORY_PATH / "snapshots"
 
 
 def read_snapshot(power_supply_id: int) -> List[FinalMessage]:
