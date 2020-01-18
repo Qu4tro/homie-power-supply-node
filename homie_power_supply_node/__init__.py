@@ -8,8 +8,6 @@ from functools import lru_cache
 from homie_spec import Node
 from homie_spec.properties import PercentageProperty, BooleanProperty, Property, Datatype
 
-__version__ = "0.1.0"
-
 
 class PowerSupply(NamedTuple):
     "PowerSupply representation"

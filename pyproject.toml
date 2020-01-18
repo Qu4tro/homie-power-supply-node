@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "homie-power-supply-node"
-version = "0.1.0"
+version = "0.1.1"
 description = "homie-power-supply-node is a Python package that uses homie-spec to provide a homie node implementation that can be used to create Homie-compliant messages from your power supply device."
 authors = ["Xavier Francisco <xavier.n.francisco@gmail.com>"]
 license = 'MIT'
