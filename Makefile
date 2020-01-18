@@ -1,4 +1,4 @@
-.PHONY: all test tests cov-report tests-all style black lint types docs tox mypy pdoc pylint clean test-watch tests-watch watch ptw travis travis-lint pdocs type
+.PHONY: all test tests cov-report tests-all style black lint types docs tox mypy pdoc pylint clean test-watch tests-watch watch ptw travis travis-lint pdocs type snapshot snapshots
 
 
 test tests .coverage:
@@ -32,3 +32,6 @@ docs pdoc pdocs:
 
 clean:
 	rm -rf __pycache__ */__pycache__ *.egg-info .coverage .hypothesis .mypy_cache .tox .pytest_cache
+
+snapshot snapshots:
+	poetry run python -c '__import__("tests").make_snapshots()'

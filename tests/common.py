@@ -1,5 +1,7 @@
 "Set of functions that are useful to multiple test cases"
 
+import os
+from pathlib import Path
 from typing import NamedTuple, List, Iterator
 
 from homie_power_supply_node import PowerSupply
@@ -50,3 +52,13 @@ def power_supplies_for_test() -> Iterator[int]:
     "List the indexes of the power supplies in the tests/data directory"
     for power_supply in PowerSupply.find_all():
         yield int(power_supply.name.split("_")[0])
+
+
+def load_power_supply_directory_env() -> None:
+    """
+    Load POWER_SUPPLY_DIRECTORY into the tests environment variables.
+
+    This is used to load the files inside `tests/data`
+    """
+    dir_path = Path(os.path.dirname(os.path.realpath(__file__)))
+    os.environ["POWER_SUPPLY_DIRECTORY"] = str(dir_path / "data")
