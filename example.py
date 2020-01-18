@@ -2,11 +2,13 @@
 
 from homie_spec import Device
 from homie_power_supply_node import PowerSupply
+from tests.common import load_power_supply_directory_env
 
+load_power_supply_directory_env()
 desktop = Device(
     id="desktop",
     name="Desktop Computer",
-    nodes={"battery": PowerSupply("BAT0").node(whitelist_properties=["capacity"])},
+    nodes={"battery": PowerSupply("1_BAT").node(whitelist_properties=["capacity"])},
 )
 
 messages = desktop.messages()
@@ -18,7 +20,7 @@ assert next(messages).topic == "homie/desktop/$nodes"
 
 msg = next(messages)
 assert msg.topic == "homie/desktop/battery/$name"
-assert msg.payload == "BAT0"
+assert msg.payload == "1_BAT"
 
 msg = next(messages)
 assert msg.topic == "homie/desktop/battery/$type"
