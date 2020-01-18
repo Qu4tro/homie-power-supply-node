@@ -202,7 +202,7 @@ description = "homie-spec is a Python library that handles the v4 Homie Conventi
 name = "homie-spec"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.4.0"
+version = "0.4.1"
 
 [[package]]
 category = "dev"
@@ -817,8 +817,8 @@ greenlet = [
     {file = "greenlet-0.4.15.tar.gz", hash = "sha256:9416443e219356e3c31f1f918a91badf2e37acf297e2fa13d24d1cc2380f8fbc"},
 ]
 homie-spec = [
-    {file = "homie-spec-0.4.0.tar.gz", hash = "sha256:9695a64c761df413fe572cf3c3c4e71333099df480b98a9a9bce41979936b57f"},
-    {file = "homie_spec-0.4.0-py3-none-any.whl", hash = "sha256:0bcbded5d151ce497539578f2f3f07f1fde1b435d56f1450446839955b0b7ac7"},
+    {file = "homie-spec-0.4.1.tar.gz", hash = "sha256:00502d97928c8fe06d53028db163d97e6b52ff3257af0dea1633da1b65a4a9ef"},
+    {file = "homie_spec-0.4.1-py3-none-any.whl", hash = "sha256:2d15092e9e7c3710e56e4981d2b0f93ea2834f6e4e54aa509fe30c973bbdd3a6"},
 ]
 idna = [
     {file = "idna-2.8-py2.py3-none-any.whl", hash = "sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"},
