@@ -6,7 +6,7 @@ authors = ["Xavier Francisco <xavier.n.francisco@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
-homie-spec = "^0.3.1"
+homie-spec = "^0.4.0"
 
 [tool.poetry.dev-dependencies]
 tox = "^3.14.3"

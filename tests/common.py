@@ -16,6 +16,7 @@ class FinalMessage(NamedTuple):
 
     This is the object that is tested throughout the test suite.
     """
+
     topic: str
     payload: str
     qos: int
@@ -29,7 +30,7 @@ def all_node_messages(index: int) -> List[FinalMessage]:
 
     Includes both the attribute messages and the get-messages
     """
-    node = get_power_supply(index).node
+    node = get_power_supply(index).node()
 
     # Let's start with the declarative messages
     messages = list(node.messages(prefix="device/power-supply"))
@@ -46,7 +47,9 @@ def all_node_messages(index: int) -> List[FinalMessage]:
     return [FinalMessage(m.topic, m.payload, m.qos, m.retained) for m in messages]
 
 
-def find_message_and_get_payload(messages: List[FinalMessage], topic: str) -> Optional[str]:
+def find_message_and_get_payload(
+    messages: List[FinalMessage], topic: str
+) -> Optional[str]:
     """
     Look for a message given a topic and return its payload.
 

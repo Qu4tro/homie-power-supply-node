@@ -8,7 +8,7 @@ from tests.common import (
     all_node_messages,
     FinalMessage,
     load_power_supply_directory_env,
-    TEST_DIRECTORY_PATH
+    TEST_DIRECTORY_PATH,
 )
 
 SNAPSHOTS_PATH = TEST_DIRECTORY_PATH / "snapshots"

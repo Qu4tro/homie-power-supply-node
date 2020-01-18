@@ -202,7 +202,7 @@ description = "homie-spec is a Python library that handles the v4 Homie Conventi
 name = "homie-spec"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.3.2"
+version = "0.4.0"
 
 [[package]]
 category = "dev"
@@ -694,7 +694,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pathlib2", "contextlib2", "unittest2"]
 
 [metadata]
-content-hash = "22f743fbb51e9bcd13c9704d0d1462da6c763791115a5190bbe22acd50afb6e3"
+content-hash = "bf2be7a30a82e08fe4454fe4c3869bb9ad60c684fc189e37b021f2c23e4da370"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -817,8 +817,8 @@ greenlet = [
     {file = "greenlet-0.4.15.tar.gz", hash = "sha256:9416443e219356e3c31f1f918a91badf2e37acf297e2fa13d24d1cc2380f8fbc"},
 ]
 homie-spec = [
-    {file = "homie-spec-0.3.2.tar.gz", hash = "sha256:68a44055b26d2a9866e66ca5118a0b7663a8d89383b7aaf4a874d86654739949"},
-    {file = "homie_spec-0.3.2-py3-none-any.whl", hash = "sha256:48a678d4c353227f2fee26dfb7d29814bab6458173adfba95a19e894167cbc96"},
+    {file = "homie-spec-0.4.0.tar.gz", hash = "sha256:9695a64c761df413fe572cf3c3c4e71333099df480b98a9a9bce41979936b57f"},
+    {file = "homie_spec-0.4.0-py3-none-any.whl", hash = "sha256:0bcbded5d151ce497539578f2f3f07f1fde1b435d56f1450446839955b0b7ac7"},
 ]
 idna = [
     {file = "idna-2.8-py2.py3-none-any.whl", hash = "sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"},

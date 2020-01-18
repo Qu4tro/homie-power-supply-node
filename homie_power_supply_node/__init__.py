@@ -88,9 +88,7 @@ class PowerSupply(NamedTuple):
                 def int_to_bool_to_str(key: str = key) -> str:
                     return str(bool(int(self.value(key)))).lower()
 
-                props[key] = BooleanProperty(
-                    name=name, get=int_to_bool_to_str
-                )
+                props[key] = BooleanProperty(name=name, get=int_to_bool_to_str)
             elif key == "status":
 
                 def get(key: str = key) -> str:
@@ -116,10 +114,7 @@ class PowerSupply(NamedTuple):
                     return str(int(self.value(key)) / 10 ** 6)
 
                 props[key] = Property(
-                    name=name,
-                    datatype=Datatype.FLOAT,
-                    get=micro_to_unit,
-                    unit="V",
+                    name=name, datatype=Datatype.FLOAT, get=micro_to_unit, unit="V"
                 )
             elif key == "power_now":
 
@@ -127,10 +122,7 @@ class PowerSupply(NamedTuple):
                     return str(int(self.value(key)) / 10 ** 6)
 
                 props[key] = Property(
-                    name=name,
-                    datatype=Datatype.FLOAT,
-                    get=micro_to_unit,
-                    unit="W",
+                    name=name, datatype=Datatype.FLOAT, get=micro_to_unit, unit="W"
                 )
             elif key.startswith("energy_"):
 
@@ -138,10 +130,7 @@ class PowerSupply(NamedTuple):
                     return str(int(self.value(key)) / 10 ** 6)
 
                 props[key] = Property(
-                    name=name,
-                    datatype=Datatype.FLOAT,
-                    get=micro_to_unit,
-                    unit="W/h",
+                    name=name, datatype=Datatype.FLOAT, get=micro_to_unit, unit="W/h"
                 )
             elif key == "capacity_level":
 
@@ -149,26 +138,28 @@ class PowerSupply(NamedTuple):
                     return self.value(key)
 
                 props[key] = Property(
-                    name=name,
-                    datatype=Datatype.ENUM,
-                    get=get,
-                    formatOf="Normal",
+                    name=name, datatype=Datatype.ENUM, get=get, formatOf="Normal"
                 )
             else:
 
                 def get(key: str = key) -> str:
                     return self.value(key)
 
-                props[key] = Property(
-                    name=name, datatype=Datatype.STRING, get=get
-                )
+                props[key] = Property(name=name, datatype=Datatype.STRING, get=get)
 
         return props
 
-    @property
-    def node(self) -> Node:
+    def node(self, whitelist_properties: Optional[List[str]] = None) -> Node:
         "Create a node for the PowerSupply represented by this instance"
-        node = Node(name=self.name, typeOf="power-supply", properties=self.properties())
+        node = Node(
+            name=self.name,
+            typeOf="power-supply",
+            properties={
+                prop_name: prop
+                for prop_name, prop in self.properties().items()
+                if whitelist_properties is None or prop_name in whitelist_properties
+            },
+        )
         return node
 
     @classmethod
